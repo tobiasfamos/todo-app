@@ -1,5 +1,5 @@
 <template>
-  <input @keydown.enter="insertTask" class="task input" v-model="taskInput" />
+  <input @keydown.enter="insertTask" class="task input" v-model="taskInput"  placeholder="Enter your task..."/>
 </template>
 
 <script>

@@ -2,8 +2,7 @@
   <div class="task-container">
     <div style="width:100%" v-for="task in $store.getters.tasksByDone(done)">
       <TodoTask
-        :id="'task' + task.key"
-        :key="task.key"
+        :key="task.id"
         :description="task.title"
         :date="task.date"
         :taskKey="task.id"
@@ -17,7 +16,6 @@
 <script>
 import TodoTask from "./TodoTask";
 import store from "@/Store/Store";
-import { mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "TodoList",
