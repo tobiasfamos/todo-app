@@ -191,11 +191,14 @@ const actions = {
       });
   },
   editSave(context) {
+    //Update the tasks at backend
     context.dispatch("updateTask", {
       description: state.loginInput.description,
       date: moment(state.loginInput.date).format("YYYY-MM-DD"),
       id: state.currentTodoEdit
     });
+    // Reset the Input and hide the input fields
+    context.dispatch("editDiscard");
   },
   editDiscard(context) {
     context.commit("RESET_EDIT_INPUT");

@@ -1,33 +1,42 @@
 <template>
   <div>
-    <todo-edit-block input-key="description" type="text">
+    <todo-info info-key="id">
+      Id
+    </todo-info>
+    <todo-edit-block input-key="description" type="text" @todoNext="editSave" :autofocus="true">
       Description
     </todo-edit-block>
-    <todo-edit-block input-key="date" type="date">
+    <todo-edit-block input-key="date" type="date" @todoNext="editSave">
       Date
     </todo-edit-block>
     <todo-info info-key="done">
       Done
     </todo-info>
+    <todo-info info-key="createdAt" :date="true">
+      Created
+    </todo-info>
+    <todo-info info-key="updatedAt" :date="true">
+      Last Updated
+    </todo-info>
     <base-todo-button @todoButtonClicked="editSave">
       Save
     </base-todo-button>
     <base-todo-button @todoButtonClicked="editDiscard">
-      Cancel</base-todo-button
-    >
+      Cancel
+    </base-todo-button>
   </div>
 </template>
 
 <script>
 import TodoEditBlock from "./TodoEditBlock";
 import store from "@/Store/Store";
-import {mapActions, mapGetters, mapMutations} from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import BaseTodoButton from "./BaseTodoButton";
 import moment from "moment";
 import TodoInfo from "./TodoInfo";
 export default {
   name: "TodoEdit",
-  components: {TodoInfo, BaseTodoButton, TodoEditBlock },
+  components: { TodoInfo, BaseTodoButton, TodoEditBlock },
   store,
   computed: {
     ...mapGetters(["currentTodoEdit", "getTaskById"])
@@ -50,7 +59,7 @@ export default {
         });
       }
     }
-  },
+  }
 };
 </script>
 
