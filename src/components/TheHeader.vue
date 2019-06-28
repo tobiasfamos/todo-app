@@ -1,10 +1,12 @@
 <template>
-  <base-todo-button
-    class="button"
-    @todoButtonClicked="buttonClicked"
-  >
-    Logout
-  </base-todo-button>
+  <div>
+    <base-todo-button class="button" @todoButtonClicked="logoutClicked">
+      Logout
+    </base-todo-button>
+    <base-todo-button class="button" @todoButtonClicked="settingsClicked">
+      Settings
+    </base-todo-button>
+  </div>
 </template>
 
 <script>
@@ -13,9 +15,12 @@ export default {
   name: "TheHeader",
   components: { BaseTodoButton },
   methods: {
-    buttonClicked() {
+    logoutClicked() {
       localStorage.removeItem("token");
       this.$router.push("/login");
+    },
+    settingsClicked(){
+      this.$router.push("/settings")
     }
   }
 };

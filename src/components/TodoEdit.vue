@@ -53,7 +53,6 @@ export default {
     ...mapActions(["editSave", "editDiscard"]),
     setInputFieldValues(id) {
       if (id) {
-        console.log("UPDATED");
         let task = this.getTaskById(id);
         this.UPDATE_LOGIN_INPUT({
           inputKey: "description",

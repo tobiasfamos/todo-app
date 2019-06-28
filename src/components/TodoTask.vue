@@ -8,26 +8,12 @@
     <div class="todo-part" @click.stop="">
       <base-todo-checkbox :done="done" @todoChecked="todoChecked" />
     </div>
-    <div v-if="edit" class="todo-part">
-      <todo-description-edit
-        :task-key="taskKey"
-        :description="description"
-        @exit="edit = false"
-      ></todo-description-edit>
-    </div>
-    <div v-else class="todo-part">
+    <div class="todo-part">
       <base-todo-text>
         {{ description }}
       </base-todo-text>
     </div>
-    <div class="todo-part" v-if="edit">
-      <todo-date-edit
-        :taskKey="taskKey"
-        :date="momentDate"
-        @exit="edit = false"
-      ></todo-date-edit>
-    </div>
-    <div v-else class="todo-part">
+    <div  class="todo-part">
       <base-todo-text>
         {{ readableDate }}
       </base-todo-text>
@@ -43,26 +29,14 @@ import { mapActions, mapMutations } from "vuex";
 import BaseTodoClose from "./BaseTodoClose";
 import BaseTodoCheckbox from "./BaseTodoCheckbox";
 import BaseTodoText from "./BaseTodoText";
-import TodoDescriptionEdit from "./TodoDescriptionEdit";
-import TodoDateEdit from "./TodoDateEdit";
-import Moment from "moment";
 import moment from "moment";
 
 export default {
   name: "TodoTask",
   components: {
-    TodoDateEdit,
-    TodoDescriptionEdit,
     BaseTodoText,
     BaseTodoCheckbox,
     BaseTodoClose
-  },
-  data: function() {
-    return {
-      edit: false,
-      descriptionInput: "",
-      dateInput: ""
-    };
   },
   props: {
     description: {
@@ -94,11 +68,8 @@ export default {
   },
   computed: {
     readableDate() {
-      return moment(this.date).format("DD-MM-YYYY");
+      return moment(this.date).format(this.$store.state.dateTemplate);
     },
-    momentDate() {
-      return moment(this.date);
-    }
   }
 };
 </script>
@@ -116,9 +87,5 @@ export default {
 .todo-part {
   width: 24%;
   overflow: hidden;
-}
-
-.done {
-  text-decoration: line-through;
 }
 </style>

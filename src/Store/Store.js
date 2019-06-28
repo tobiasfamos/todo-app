@@ -53,15 +53,15 @@ const mutations = {
     state.nextKey++;
   },
   UPDATE_LOGIN_INPUT(state, payload) {
-    state.loginInput[payload.inputKey] = payload.value;
+    state.input[payload.inputKey] = payload.value;
   },
   RESET_LOGIN_INPUT(state) {
-    state.loginInput.username = "";
-    state.loginInput.password = "";
+    state.input.username = "";
+    state.input.password = "";
   },
   RESET_EDIT_INPUT(state) {
-    state.loginInput.date = "";
-    state.loginInput.description = "";
+    state.input.date = "";
+    state.input.description = "";
   },
   SET_TOKEN(state, payload) {
     state.token = payload.token;
@@ -76,6 +76,9 @@ const mutations = {
       }
       return t;
     });
+  },
+  SET_DATE_TEMPLATE(state, payload) {
+    state.dateTemplate = payload.template;
   }
 };
 
@@ -180,8 +183,8 @@ const actions = {
   editSave(context) {
     //Update the tasks at backend
     context.dispatch("updateTask", {
-      description: state.loginInput.description,
-      date: moment(state.loginInput.date).format("YYYY-MM-DD"),
+      description: state.input.description,
+      date: moment(state.input.date).format("YYYY-MM-DD"),
       id: state.currentTodoEdit
     });
     // Reset the Input and hide the input fields
@@ -191,7 +194,11 @@ const actions = {
     context.commit("RESET_EDIT_INPUT");
     context.commit("SET_CURRENT_EDIT", { id: null });
   },
-  invertDone(context, payload) {}
+  settingsSave(context) {
+    context.commit("SET_DATE_TEMPLATE", {
+      template: state.input.settingsDateTemplate
+    });
+  }
 };
 
 export default new Vuex.Store({

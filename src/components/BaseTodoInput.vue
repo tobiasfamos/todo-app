@@ -6,7 +6,7 @@
   <input
     type="text"
     ref="input"
-    :value="$store.state.loginInput[inputKey]"
+    :value="$store.state.input[inputKey]"
     @input="updateStore"
     @keydown.enter="$emit('todoNext')"
     class="todo-input"

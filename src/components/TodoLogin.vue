@@ -28,8 +28,8 @@ export default {
     ...mapMutations(["RESET_LOGIN_INPUT"]),
     loginClicked() {
       this.login({
-        username: this.$store.state.loginInput["username"],
-        password: this.$store.state.loginInput["password"]
+        username: this.$store.state.input["username"],
+        password: this.$store.state.input["password"]
       });
 
       this.RESET_LOGIN_INPUT();
