@@ -1,0 +1,50 @@
+.flex-horizontal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.flex-vertical {
+  display: flex;
+  flex-direction: column;
+}
+.whole {
+  width: 100%;
+}
+.spaced {
+  justify-content: space-between;
+}
+.shadow {
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border: #d3d3d3 1px solid;
+  padding: 10px;
+  margin: 10px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.no-border {
+  border: transparent;
+  margin:10px;
+  padding:10px;
+}
+.text-size{
+  font-size:17px;
+}
+.todo-button{
+  border: #d3d3d3 1px solid;
+  background: #d3d3d3;
+  border-radius: 5px;
+}
+
+
+.todo-input{
+  border: transparent;
+  float:right;
+  text-align:right;
+}

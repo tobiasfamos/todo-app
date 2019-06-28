@@ -1,9 +1,14 @@
 <template>
-  <div>
+  <div class="flex-horizontal spaced task">
     <base-todo-text>
       <slot></slot>
     </base-todo-text>
-    <base-todo-input :input-key="inputKey" :type="type" @todoNext="$emit('todoNext')"> </base-todo-input>
+    <base-todo-input
+      :input-key="inputKey"
+      :type="type"
+      @todoNext="$emit('todoNext')"
+    >
+    </base-todo-input>
   </div>
 </template>
 
@@ -25,5 +30,4 @@ export default {
   },
 };
 </script>
-
 <style scoped></style>

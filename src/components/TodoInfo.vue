@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex-horizontal spaced task">
     <base-todo-text>
       <slot></slot>
     </base-todo-text>
@@ -38,7 +38,7 @@ export default {
       }
       return info;
     }
-  }
+  },
 };
 </script>
 

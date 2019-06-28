@@ -52,22 +52,6 @@ const mutations = {
   INC_NEXT_KEY(state) {
     state.nextKey++;
   },
-  SET_DESCRIPTION(state, payload) {
-    state.tasks = state.tasks.map(t => {
-      if (t.key === payload.key) {
-        t.description = payload.description;
-      }
-      return t;
-    });
-  },
-  SET_DATE(state, payload) {
-    state.tasks = state.tasks.map(t => {
-      if (t.key === payload.key) {
-        t.date = payload.date;
-      }
-      return t;
-    });
-  },
   UPDATE_LOGIN_INPUT(state, payload) {
     state.loginInput[payload.inputKey] = payload.value;
   },
@@ -105,6 +89,7 @@ const actions = {
       .then(resp => {
         if (resp.status === 200) {
           // Status OK
+          localStorage.setItem("token", resp.data.token);
           context.commit("SET_TOKEN", { token: resp.data.token });
         } else {
           console.log("Unauthorized");
@@ -113,21 +98,20 @@ const actions = {
   },
   addTask(context, payload) {
     //payload: description and date (YYYY-MM-DD)
-    let headers = {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + state.token
-    };
+
     let data = {
       title: payload.description,
       date: payload.date
     };
     axios
       .post(constants.baseUrl + "/todo", data, {
-        headers: headers
+        headers: constants.baseHeaders
       })
       .then(rsp => {
         if (rsp.status === 201) {
-          context.dispatch("fetchTasks");
+          //get the task without the user object
+          let { user, ...task } = rsp.data;
+          context.commit("ADD_TASK", { task: task });
         }
       })
       .catch(error => {
@@ -135,12 +119,9 @@ const actions = {
       });
   },
   fetchTasks(context) {
-    let headers = {
-      Authorization: "Bearer " + state.token
-    };
     axios
       .get(constants.baseUrl + "/todo", {
-        headers: headers
+        headers: constants.baseHeaders
       })
       .then(rsp => {
         if (rsp.status === 200) {
@@ -152,12 +133,9 @@ const actions = {
       });
   },
   deleteTask(context, payload) {
-    let headers = {
-      Authorization: "Bearer " + state.token
-    };
     axios
       .delete(constants.baseUrl + "/todo/" + payload.id, {
-        headers: headers
+        headers: constants.baseHeaders
       })
       .then(rsp => {
         if (rsp.status === 201) {
@@ -169,11 +147,6 @@ const actions = {
   updateTask(context, payload) {
     let task = state.tasks.filter(task => task.id === payload.id)[0];
 
-    let headers = {
-      Authorization: "Bearer " + state.token,
-      "Content-Type": "application/json"
-    };
-
     let data = {
       title: payload.description ? payload.description : task.title,
       date: payload.date ? payload.date : task.date,
@@ -181,13 +154,27 @@ const actions = {
     };
 
     axios
-      .patch(constants.baseUrl + /todo/ + payload.id, data, {
-        headers: headers
+      .patch(constants.baseUrl + "/todo/" + payload.id, data, {
+        headers: constants.baseHeaders
       })
       .then(rsp => {
         if (rsp.status === 201) {
-          context.dispatch("fetchTasks");
+          context.dispatch("fetchOneTask", {
+            id: payload.id
+          });
         }
+      });
+  },
+  fetchOneTask(context, payload) {
+    axios
+      .get(constants.baseUrl + "/todo/" + payload.id, {
+        headers: constants.baseHeaders
+      })
+      .then(rsp => {
+        context.commit("UPDATE_TASK", {
+          id: payload.id,
+          task: rsp.data
+        });
       });
   },
   editSave(context) {

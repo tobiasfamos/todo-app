@@ -1,9 +1,13 @@
 <template>
-  <div>
+  <div class="flex-horizontal task">
     <base-todo-text>
       <slot></slot>
     </base-todo-text>
-    <base-todo-input :input-key="inputKey" @todoNext="$emit('todoNext')"></base-todo-input>
+    <base-todo-input
+      style="  border: #d3d3d3 1px solid"
+      :input-key="inputKey"
+      @todoNext="$emit('todoNext')"
+    ></base-todo-input>
   </div>
 </template>
 

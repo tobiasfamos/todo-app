@@ -2,7 +2,7 @@
   emits: todoButtonClicked
 -->
 <template>
-  <button @click="$emit('todoButtonClicked')">
+  <button @click="$emit('todoButtonClicked')" class="todo-button">
     <slot></slot>
   </button>
 </template>

@@ -6,7 +6,7 @@
     <todo-login-block class="el" input-key="password" @todoNext="loginClicked">
       Password
     </todo-login-block>
-    <base-todo-button class="el" @todoButtonClicked="loginClicked">
+    <base-todo-button style="float:right"class="el" @todoButtonClicked="loginClicked">
       Login</base-todo-button
     >
   </div>
@@ -48,7 +48,5 @@ export default {
 </script>
 
 <style scoped>
-.el {
-  margin: 10px;
-}
+
 </style>

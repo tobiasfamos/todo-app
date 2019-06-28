@@ -3,7 +3,12 @@
     <todo-info info-key="id">
       Id
     </todo-info>
-    <todo-edit-block input-key="description" type="text" @todoNext="editSave" :autofocus="true">
+    <todo-edit-block
+      input-key="description"
+      type="text"
+      @todoNext="editSave"
+      :autofocus="true"
+    >
       Description
     </todo-edit-block>
     <todo-edit-block input-key="date" type="date" @todoNext="editSave">
@@ -18,12 +23,14 @@
     <todo-info info-key="updatedAt" :date="true">
       Last Updated
     </todo-info>
-    <base-todo-button @todoButtonClicked="editSave">
-      Save
-    </base-todo-button>
-    <base-todo-button @todoButtonClicked="editDiscard">
-      Cancel
-    </base-todo-button>
+    <div class="button-container">
+      <base-todo-button @todoButtonClicked="editSave">
+        Save
+      </base-todo-button>
+      <base-todo-button @todoButtonClicked="editDiscard">
+        Cancel
+      </base-todo-button>
+    </div>
   </div>
 </template>
 
@@ -43,12 +50,11 @@ export default {
   },
   methods: {
     ...mapMutations(["UPDATE_LOGIN_INPUT"]),
-    ...mapActions(["editSave", "editDiscard"])
-  },
-  watch: {
-    currentTodoEdit(newId) {
-      if (newId) {
-        let task = this.getTaskById(newId);
+    ...mapActions(["editSave", "editDiscard"]),
+    setInputFieldValues(id) {
+      if (id) {
+        console.log("UPDATED");
+        let task = this.getTaskById(id);
         this.UPDATE_LOGIN_INPUT({
           inputKey: "description",
           value: task.title
@@ -59,8 +65,21 @@ export default {
         });
       }
     }
+  },
+  watch: {
+    currentTodoEdit(newId) {
+      this.setInputFieldValues(newId);
+    }
+  },
+  created(){
+    this.setInputFieldValues(this.$store.state.currentTodoEdit)
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.button-container {
+  float: right;
+  margin-top: 20px;
+}
+</style>

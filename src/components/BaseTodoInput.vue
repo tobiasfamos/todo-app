@@ -9,6 +9,7 @@
     :value="$store.state.loginInput[inputKey]"
     @input="updateStore"
     @keydown.enter="$emit('todoNext')"
+    class="todo-input"
   />
 </template>
 

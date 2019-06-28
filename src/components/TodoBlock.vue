@@ -1,7 +1,12 @@
 <template>
-  <div class="flex">
-    <todo-app class="list" />
-    <todo-edit class="edit" v-show="$store.state.currentTodoEdit" />
+  <div class="flex-vertical whole">
+    <div>
+      <the-header />
+    </div>
+    <div class="flex-horizontal">
+      <todo-app class="list" />
+      <todo-edit class="edit" v-if="$store.state.currentTodoEdit" />
+    </div>
   </div>
 </template>
 
@@ -9,25 +14,22 @@
 import TodoApp from "./TodoApp";
 import TodoEdit from "./TodoEdit";
 import store from "@/Store/Store";
+import TheHeader from "./TheHeader";
 export default {
   name: "TodoBlock",
   store,
-  components: { TodoApp, TodoEdit }
+  components: { TheHeader, TodoApp, TodoEdit }
 };
 </script>
 
 <style scoped>
-.flex {
-  display: flex;
-  flex-direction: row;
-  align-content: space-around;
-  justify-content: space-between;
-}
 .list {
   width: 50vw;
   margin: 5vw;
 }
 .edit {
+  align-self: flex-start;
+  position: sticky;
   width: 30vw;
   margin: 5vw;
 }

@@ -1,5 +1,6 @@
 <template>
   <input
+    style="position:sticky"
     @keydown.enter="insertTask"
     class="task input"
     v-model="taskInput"
@@ -45,6 +46,7 @@ export default {
   padding: 10px;
   margin: 5px;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  position:sticky;
 }
 
 .input {

@@ -28,7 +28,7 @@ const router = new Router({
 });
 router.beforeEach((to, from, next) => {
   if (to.meta.authorize) {
-    if (store.state.token) {
+    if (localStorage.getItem("token")) {
       next();
     } else {
       next("/login");
