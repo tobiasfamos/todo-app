@@ -3,6 +3,7 @@ import Vue from "vue";
 import axios from "axios";
 import data from "./data";
 import constants from "@/constants";
+import moment from "moment";
 
 Vue.use(Vuex);
 
@@ -23,10 +24,16 @@ const getters = {
   },
   getTaskById: state => id => {
     return state.tasks.filter(task => task.id === id)[0];
+  },
+  currentTodoEdit: state => {
+    return state.currentTodoEdit;
   }
 };
 
 const mutations = {
+  SET_CURRENT_EDIT(state, payload) {
+    state.currentTodoEdit = payload.id;
+  },
   ADD_TASK(state, payload) {
     state.tasks.unshift(payload.task);
   },
@@ -67,6 +74,10 @@ const mutations = {
   RESET_LOGIN_INPUT(state) {
     state.loginInput.username = "";
     state.loginInput.password = "";
+  },
+  RESET_EDIT_INPUT(state) {
+    state.loginInput.date = "";
+    state.loginInput.description = "";
   },
   SET_TOKEN(state, payload) {
     state.token = payload.token;
@@ -152,7 +163,8 @@ const actions = {
         if (rsp.status === 201) {
           context.commit("DELETE_TASK", { id: payload.id });
         }
-      });
+      })
+      .catch(err => {});
   },
   updateTask(context, payload) {
     let task = state.tasks.filter(task => task.id === payload.id)[0];
@@ -165,7 +177,7 @@ const actions = {
     let data = {
       title: payload.description ? payload.description : task.title,
       date: payload.date ? payload.date : task.date,
-      done: payload.done ? payload.done : task.done
+      done: payload.done !== null ? payload.done : task.done
     };
 
     axios
@@ -178,8 +190,19 @@ const actions = {
         }
       });
   },
-  updateDescription(context, payload) {
-    let task = state.tasks.filter(task => task.id === payload.id)[0];
+  editSave(context) {
+    //Update the tasks at backend
+    context.dispatch("updateTask", {
+      description: state.loginInput.description,
+      date: moment(state.loginInput.date).format("YYYY-MM-DD"),
+      id: state.currentTodoEdit
+    });
+    // Reset the Input and hide the input fields
+    context.dispatch("editDiscard");
+  },
+  editDiscard(context) {
+    context.commit("RESET_EDIT_INPUT");
+    context.commit("SET_CURRENT_EDIT", { id: null });
   },
   invertDone(context, payload) {}
 };

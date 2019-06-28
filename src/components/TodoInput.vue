@@ -1,11 +1,16 @@
 <template>
-  <input @keydown.enter="insertTask" class="task input" v-model="taskInput" />
+  <input
+    @keydown.enter="insertTask"
+    class="task input"
+    v-model="taskInput"
+    placeholder="Enter your task..."
+  />
 </template>
 
 <script>
 import store from "@/Store/Store";
 import MaxTween from "gsap";
-import {mapActions, mapMutations} from "vuex";
+import { mapActions, mapMutations } from "vuex";
 import moment from "moment";
 
 export default {

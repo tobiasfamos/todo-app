@@ -5,9 +5,12 @@ const data = {
   nextKey: 3,
   loginInput: {
     username: "",
-    password: ""
+    password: "",
+    description: "",
+    date: ""
   },
-  token: null
+  token: null,
+  currentTodoEdit: null
 };
 
 export default data;

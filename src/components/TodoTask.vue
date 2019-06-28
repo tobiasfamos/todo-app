@@ -1,10 +1,12 @@
 <template>
-  <div class="task" @click="edit = true" :class="{ done: done }" ref="task">
+  <div
+    class="task"
+    @click="SET_CURRENT_EDIT({ id: taskKey })"
+    :class="{ done: done }"
+    ref="task"
+  >
     <div class="todo-part" @click.stop="">
-      <base-todo-checkbox
-        :done="done"
-        @todoChecked="todoChecked"
-      />
+      <base-todo-checkbox :done="done" @todoChecked="todoChecked" />
     </div>
     <div v-if="edit" class="todo-part">
       <todo-description-edit
@@ -37,7 +39,7 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations} from "vuex";
+import { mapActions, mapMutations } from "vuex";
 import BaseTodoClose from "./BaseTodoClose";
 import BaseTodoCheckbox from "./BaseTodoCheckbox";
 import BaseTodoText from "./BaseTodoText";
@@ -81,21 +83,21 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["DELETE_TASK", "INVERT_DONE"]),
-    ...mapActions(["deleteTask","updateTask"]),
+    ...mapMutations(["DELETE_TASK", "INVERT_DONE", "SET_CURRENT_EDIT"]),
+    ...mapActions(["deleteTask", "updateTask"]),
     remove() {
-      this.deleteTask({id: this.taskKey})
+      this.deleteTask({ id: this.taskKey });
     },
-    todoChecked(){
-      this.updateTask({id: this.taskKey, done: !this.done})
+    todoChecked() {
+      this.updateTask({ id: this.taskKey, done: !this.done });
     }
   },
-  computed:{
-    readableDate(){
-      return moment((this.date)).format("DD-MM-YYYY");
+  computed: {
+    readableDate() {
+      return moment(this.date).format("DD-MM-YYYY");
     },
-    momentDate(){
-      return moment(this.date)
+    momentDate() {
+      return moment(this.date);
     }
   }
 };
@@ -116,7 +118,7 @@ export default {
   overflow: hidden;
 }
 
-  .done{
-    text-decoration: line-through;
-  }
+.done {
+  text-decoration: line-through;
+}
 </style>

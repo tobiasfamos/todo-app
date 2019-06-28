@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
-import TodoApp from "../components/TodoApp";
 import TodoLogin from "../components/TodoLogin";
 import store from "@/Store/Store";
+import TodoBlock from "../components/TodoBlock";
 
 Vue.use(Router);
 
@@ -18,8 +18,8 @@ const router = new Router({
     },
     {
       path: "/",
-      name: "TodoApp",
-      component: TodoApp,
+      name: "TodoBlock",
+      component: TodoBlock,
       meta: {
         authorize: true
       }
